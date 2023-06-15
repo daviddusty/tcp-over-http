@@ -3,7 +3,7 @@ on:
     branches:
       - master
 jobs:
-  free-build:
+  go-build:
     runs-on: windows-2019
     steps:
       - name: Checkout
@@ -14,8 +14,12 @@ jobs:
         with:
           go-version: '1.12'
 
-      - name: Build
+      - name: Install
         run: go install ./...
+        
+      - name: Build
+        working-directory: cmd/tcp_over_http
+        run: go build
 
       - name: Upload API
         uses: actions/upload-artifact@v3
