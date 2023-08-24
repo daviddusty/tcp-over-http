@@ -44,7 +44,7 @@ jobs:
               run: go install ./...
 
             - name: Build
-              working-directory: cmd/tcp_over_http
+              working-directory: cmd/tcp_over_http_server
               run: go build
 
             - name: Upload API
