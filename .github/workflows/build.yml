@@ -1,29 +1,55 @@
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
+
 jobs:
-  go-build:
-    runs-on: windows-2019
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    build-windows:
+        runs-on: windows-2019
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.12'
+            - name: Set up Go
+              uses: actions/setup-go@v4
+              with:
+                  go-version: '1.12'
 
-      - name: Install
-        run: go install ./...
-        
-      - name: Build
-        working-directory: cmd/tcp_over_http
-        run: go build
+            - name: Install Go
+              run: go install ./...
 
-      - name: Upload API
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact-2
-          path: cmd/tcp_over_http
-          retention-days: 1
+            - name: Build
+              working-directory: cmd/tcp_over_http
+              run: go build
+
+            - name: Upload API
+              uses: actions/upload-artifact@v3
+              with:
+                  name: build-windows
+                  path: cmd/tcp_over_http
+                  retention-days: 1
+
+    build-linux:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Set up Go
+              uses: actions/setup-go@v4
+              with:
+                  go-version: '1.12'
+
+            - name: Install Go
+              run: go install ./...
+
+            - name: Build
+              working-directory: cmd/tcp_over_http
+              run: go build
+
+            - name: Upload API
+              uses: actions/upload-artifact@v3
+              with:
+                  name: build-linux
+                  path: cmd/tcp_over_http
+                  retention-days: 1
