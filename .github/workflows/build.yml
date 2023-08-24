@@ -51,5 +51,5 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: build-linux
-                  path: cmd/tcp_over_http
+                  path: cmd/tcp_over_http_server
                   retention-days: 1
